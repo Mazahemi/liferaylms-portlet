@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.service.GroupLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.JavaConstants"%>
 <%@page import="javax.portlet.PortletResponse"%>
 <%@page import="com.liferay.portal.kernel.util.Validator"%>
@@ -13,11 +14,11 @@
 <%@page import="com.liferay.lms.service.CourseLocalServiceUtil"%>
 <%@page import="com.liferay.lms.model.Course"%>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
-page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
-page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
-page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
+<%@page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %>
+<%@page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
+<%@page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %>
+<%@page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
 
 <%
 PortletResponse portletResponse =
@@ -33,9 +34,11 @@ String hiddenInput = "assetCategoryIds";
 String curCategoryIds = "";
 String curCategoryNames = StringPool.BLANK;
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+long defaultGroupId = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), String.valueOf(themeDisplay.getCompanyId())).getGroupId();
 
 
 vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(searchGroupId));
+vocabularies.addAll(AssetVocabularyLocalServiceUtil.getGroupVocabularies(defaultGroupId));
 
 	String curCategoryIdsParam = request.getParameter(hiddenInput);
 
